@@ -1,1 +1,5 @@
 参考自mujoco/mujoco playground等colab notebook
+
+选择的是mujoco playground，因为之前想做具身仿真器渲染优化时看中了madrona渲染器，而mujoco playground正好就用了这个，不过什么也没研究出来。
+
+先按照mujoco playground和madrona配好环境，印象中环境问题不少。
