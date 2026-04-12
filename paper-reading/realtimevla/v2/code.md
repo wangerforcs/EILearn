@@ -122,15 +122,13 @@ QP 的约束也很清楚：
 
 去重放从锚点到当前时刻的状态演化。
 
-作用有两个：
+作用是
 
 - 在观测延迟存在时估计“现在的机器人状态”
 - 用观测和预测之间的偏差做接触检测
 
 接触判断逻辑在 [client/executor.py](https://github.com/dexmal/realtime-vla-v2/blob/main/client/executor.py#L50) 到 [client/executor.py](https://github.com/dexmal/realtime-vla-v2/blob/main/client/executor.py#L76)。
 
-我的理解是：
-它把“命令驱动下的理想一阶响应”当作 baseline，如果真实状态明显偏离，就说明机器人可能进入接触、受阻或模型失配场景。
 
 ## 5.2 `ProgressManager`
 
@@ -202,7 +200,7 @@ QP 的约束也很清楚：
 
 `RawActionExecutor` 从 [client/executor.py](https://github.com/dexmal/realtime-vla-v2/blob/main/client/executor.py#L746) 开始。
 
-它适合“不上本地 MPC，只做平滑和插值”的模式。核心思路是：
+只做平滑和插值的模式，核心思路是：
 
 - 推理线程把 future actions 放进队列
 - 心跳线程按执行节奏取动作
@@ -217,7 +215,6 @@ QP 的约束也很清楚：
 - 结合图像时间戳和观测延迟，构造 `state_trajectory`
 - 把 `predicted_steps` 作为 `state_delta` 发给服务端
 
-这部分是典型的“推理对齐”逻辑。
 
 ### 8.2 推理回来后如何接上当前执行进度
 
@@ -241,7 +238,7 @@ QP 的约束也很清楚：
 - 估算到下一动作所需最小时间间隔
 - 记录 `raw_pre_smooth_action` / `pre_smooth_action` / `post_smooth_action`
 
-这个设计很适合做日志分析，因为你能看到“原始动作、平滑前、平滑后”三条轨迹。
+可以看到“原始动作、平滑前、平滑后”三条轨迹。
 
 ### 8.4 控制线程做什么
 
